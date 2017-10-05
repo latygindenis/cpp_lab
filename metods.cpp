@@ -16,6 +16,7 @@ Books::Books() //конструктор по умолчанию
     name = new char[strlen(startname)+1];
     name = strcpy(name, startname);
     num_page = 0;
+
     amount = 0;
 }
 Books::Books(const char name_book[], int num_page_book, int amount_book) //Конструктор с константной строкой
@@ -82,7 +83,7 @@ Books & Books::operator++()
     amount++;
     return *this;
 }
-Books::operator float()
+Books::operator float() const
 {
     return amount;
 }
@@ -122,5 +123,47 @@ Books::~Books()
     delete[] name;
 }
 
+ostream & operator << (ostream &os, Books &book) {
+    os << book.name<<" "<<book.amount<<" "<<book.num_page;
+    return os;
 
+}
+istream& operator >> (istream& is, Books &book)
+{
+    is >>book.name>>book.amount>>book.num_page;
+    return is;
+}
+
+char *Books::getName() const {
+    return name;
+}
+
+int Books::getNum_page() const {
+    return num_page;
+}
+
+void Books::write(ofstream &os) {
+    os.write(name, strlen(name) + 1);
+    os.write(reinterpret_cast<char *>(&num_page), sizeof(num_page));
+    os.write(reinterpret_cast<char *>(&amount), sizeof(amount));
+}
+
+void Books::read(ifstream &is){
+    char ch;
+    int i=0;
+    streampos s = is.tellg();
+    while ((ch = is.get()) !='\0')
+    {
+        i++;
+    }
+    is.seekg(s);
+    if (name != nullptr)
+    {
+        delete[] name;
+    }
+    name = new char[i + 1];
+    is.read(name, i + 1);
+    is.read(reinterpret_cast<char *>(&num_page), sizeof(num_page));
+    is.read(reinterpret_cast<char *>(&amount), sizeof(amount));
+}
 

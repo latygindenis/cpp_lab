@@ -7,6 +7,8 @@
 //
 #include <iostream>
 #include <string.h>
+#include <fstream>
+
 using namespace std;
 
 #ifndef CLIONPROGET_HEDERS_H
@@ -17,19 +19,28 @@ class Books
     int num_page;
     int amount;
 public:
+    /*-------------------Конструкторы------------------------*/
     Books(char *name_book, int num_page_book, int amount_book);
-    Books();
+    Books(const char name_book[], int num_page_book, int amount_book);
     Books(const Books &book);
+    Books();
 
+    /*-------------------Перегруженные операторы-------------*/
     Books operator + (Books books);
     Books & operator = (Books &books);
     Books & operator ++ (int); //постфиксная форма
     Books & operator ++ (); //префиксная форма
-    operator float();
+    operator float() const;
     friend Books operator - (Books one, Books two);
+    friend ostream& operator << (ostream& os, Books &book);
+    friend istream& operator >> (istream& is, Books &book);
 
-    Books(const char name_book[], int num_page_book, int amount_book);
-    int get_amount();
+    /*-------------------Методы-----------------------------*/
+    void write(ofstream &os);
+    void read(ifstream &is);
+    int get_amount(); // геттер amount
+    int getNum_page() const;
+    char *getName() const;
     void setdata(char *name_book, int num_page_book, int amount_book);
     void enterdata();
     void print();
