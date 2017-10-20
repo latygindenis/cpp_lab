@@ -16,7 +16,6 @@ Books::Books() //конструктор по умолчанию
     name = new char[strlen(startname)+1];
     name = strcpy(name, startname);
     num_page = 0;
-
     amount = 0;
 }
 Books::Books(const char name_book[], int num_page_book, int amount_book) //Конструктор с константной строкой
@@ -29,10 +28,11 @@ Books::Books(const char name_book[], int num_page_book, int amount_book) //Ко�
 Books::Books(const Books &book) //Конструктор копирования
 {
     name = new char[strlen(book.name)+1];
-    name = strcpy(name, book.name);
+    strcpy(name, book.name);
     num_page = book.num_page;
     amount = book.amount;
 }
+
 Books Books::operator + (Books books)
 {
     Books myBook;
@@ -73,14 +73,17 @@ Books operator - (Books one, Books two)
     myBook.num_page = one.num_page - two.num_page;
     return  myBook;
 }
-Books & Books::operator++(int)
+Books  Books::operator++(int)
 {
-    amount++;
-    return *this;
+    Books myObj(*this);
+    ++(*this);
+    int x=1;
+    ++x;
+    return myObj;
 }
 Books & Books::operator++()
 {
-    amount++;
+    this->amount++;
     return *this;
 }
 Books::operator float() const
@@ -124,13 +127,13 @@ Books::~Books()
 }
 
 ostream & operator << (ostream &os, Books &book) {
-    os << book.name<<" "<<book.amount<<" "<<book.num_page;
+    os << book.name<<" "<<book.num_page<<" "<<book.amount;
     return os;
 
 }
 istream& operator >> (istream& is, Books &book)
 {
-    is >>book.name>>book.amount>>book.num_page;
+    is >>book.name>>book.num_page>>book.amount;
     return is;
 }
 
@@ -167,3 +170,51 @@ void Books::read(ifstream &is){
     is.read(reinterpret_cast<char *>(&amount), sizeof(amount));
 }
 
+
+AboutBook::AboutBook() : Books(){
+    description = new char[strlen("")];
+    description = strcpy(description, reinterpret_cast<const char *>(""));
+}
+
+AboutBook::AboutBook(const AboutBook &myAboutBook):Books(myAboutBook)
+{
+    description = new char[strlen(myAboutBook.description)+1];
+    description = myAboutBook.description;
+}
+
+AboutBook::~AboutBook() {
+    delete []description;
+}
+void AboutBook::print()
+{
+    cout<<description<<" ";
+    Books::print();
+}
+
+
+AboutBook::AboutBook(const char *name_book, int num_page_book, int amount_book, const char *mydescription) : Books(name_book,
+                                                                                                           num_page_book,
+                                                                                                           amount_book){
+    description = new char[strlen(mydescription) + 1];
+    strcpy(description, mydescription);
+}
+
+
+NumBook::NumBook(const char *name_book, int num_page_book, int amount_book, int myNumber) : Books(name_book, num_page_book,
+                                                                                    amount_book) {
+    number = myNumber;
+}
+
+void NumBook::print() {
+    cout<<number<<" ";
+    Books::print();
+}
+
+NumBook::NumBook() : Books() {
+    number = 0;
+}
+
+NumBook::NumBook(const NumBook &myNumBook):Books(myNumBook)
+{
+    number = myNumBook.number;
+}
