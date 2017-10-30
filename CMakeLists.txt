@@ -3,5 +3,5 @@ project(clionproget)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES main.cpp heders.h metods.cpp)
+set(SOURCE_FILES main.cpp heders.h metods.cpp myList.cpp myList.h)
 add_executable(clionproget ${SOURCE_FILES})

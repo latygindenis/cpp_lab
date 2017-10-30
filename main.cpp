@@ -1,5 +1,5 @@
 #include "heders.h"
-
+#include "myList.h"
 using namespace std;
 
 int main() {
@@ -71,21 +71,16 @@ int main() {
 //    cout<<(float)myBook3<<endl;
 /*-----------Демонстрация наследования--------------------------------*/
 
+
     NumBook myNumBook("Dost", 975, 784, 71);
-    NumBook myCopyNumBook(myNumBook);
-    myNumBook.print();
-    myCopyNumBook.print();
-    NumBook myEmptyNumBook;
-    myEmptyNumBook.print();
-
-
     AboutBook myAboutBook("Joo", 145, 325, "Kolly");
-    AboutBook myCopyAboutBook(myAboutBook);
-    myAboutBook.print();
-    myCopyAboutBook.print();
+    Books myMainBook("Dost", 975, 784);
 
-    AboutBook myEmptyAboutBook;
-    myEmptyAboutBook.print();
+    myList Hyu;
+    Hyu.add(&myMainBook);
+    Hyu.add(&myAboutBook);
+    Hyu.add(&myNumBook);
+    Hyu.print();
 
 
     return 0;
