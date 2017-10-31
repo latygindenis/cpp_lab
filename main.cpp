@@ -80,8 +80,13 @@ int main() {
     Hyu.add(&myMainBook);
     Hyu.add(&myAboutBook);
     Hyu.add(&myNumBook);
-    Hyu.print();
+    Hyu.add(&myNumBook);
 
+
+    Hyu.print();
+    cout<<endl;
+    Hyu.delbynumber(9);
+    Hyu.print();
 
     return 0;
 }

@@ -11,17 +11,21 @@ using namespace std;
 class myList {
 
     class elem {
-    public:
-        Books *field; // поле данных
+   public:
+       Books *field; // поле данных
         elem *next; // указатель на следующий элемент
         elem *prev; // указатель на предыдущий элемент
         elem(Books *d);
+
+        virtual ~elem();
     };
     elem *lstart, *lend;
     public:
         myList();
         void add(Books *d);
+        void del();
         void print();
+        void delbynumber(int number = 0);
 };
 
 
