@@ -170,6 +170,10 @@ void Books::read(ifstream &is){
     is.read(reinterpret_cast<char *>(&amount), sizeof(amount));
 }
 
+char *Books::getdefinition() const {
+    return 0;
+}
+
 
 AboutBook::AboutBook() : Books(){
     description = new char[strlen("")];
@@ -199,6 +203,13 @@ AboutBook::AboutBook(const char *name_book, int num_page_book, int amount_book, 
     strcpy(description, mydescription);
 }
 
+char *AboutBook::getDescription() const {
+    return description;
+}
+
+char *AboutBook::getdefinition() const {
+    return description;
+}
 
 NumBook::NumBook(const char *name_book, int num_page_book, int amount_book, int myNumber) : Books(name_book, num_page_book,
                                                                                     amount_book) {
@@ -217,4 +228,8 @@ NumBook::NumBook() : Books() {
 NumBook::NumBook(const NumBook &myNumBook):Books(myNumBook)
 {
     number = myNumBook.number;
+}
+
+char *NumBook::getdefinition() const {
+    return 0;
 }

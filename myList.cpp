@@ -67,7 +67,6 @@ void myList::del() {
     }
     else
     {
-        lend->field = 0;
         lend->prev->next = lstart;
         lend = lend->prev;
     }
@@ -101,3 +100,81 @@ void myList::delbynumber(int number) {
         }
     }
 }
+
+void myList::addbynumber(int number, Books *d) {
+
+    elem *pv = new elem(d);
+    elem *old = lstart;
+
+    for (int i = 0; i!=number; i++)
+    {
+        old = old->next;
+    }
+    if (old == lstart)
+    {
+        lstart = pv;
+        pv->next = old;
+        pv->prev = lend;
+        old->prev = pv;
+        lend->next = pv;
+    }
+    else
+    {
+        pv->prev = old->prev;
+        pv->next = old;
+        old->prev->next = pv;
+        old->prev = pv;
+    }
+}
+
+void myList::findbyname(const char name[]) {
+    elem *pv = lstart;
+    bool check = 0;
+    if (!strcmp(name,pv->field->getName()))
+    {
+        pv->field->print();
+        check = 1;
+    }
+    pv=pv->next;
+
+    while (pv != lstart)
+    {
+        if (!strcmp(name,pv->field->getName() ))
+        {
+            pv->field->print();
+            check = 1;
+        }
+        pv=pv->next;
+    }
+    if (!check)
+    {
+
+        cout<<"Nothing found"<<endl;
+    }
+}
+
+void myList::findbydescription(const char name[]) {
+
+    elem *pv = lstart;
+    bool check = 0;
+if (pv->field->getdefinition() && !strcmp(pv->field->getdefinition(), name))
+{
+    pv->field->print();
+    check = 1;
+}
+    pv=pv->next;
+    while (pv != lstart)
+    {
+        if (pv->field->getdefinition() && !strcmp(pv->field->getdefinition(), name))
+        {
+            pv->field->print();
+            check = 1;
+        }
+        pv=pv->next;
+    }
+    if (!check)
+    {
+        cout<<"Nothing found"<<endl;
+    }
+}
+

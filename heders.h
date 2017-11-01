@@ -44,7 +44,7 @@ public:
     void setdata(char *name_book, int num_page_book, int amount_book);
     void enterdata();
     virtual void print();
-
+    virtual char *getdefinition() const;
     virtual ~Books();
 };
 
@@ -52,10 +52,14 @@ class AboutBook : public Books
 {
     char *description;
 public:
+    char *getDescription() const;
+
+public:
     AboutBook();// Констрктор по умолчанию
     AboutBook(const AboutBook &myAboutBook); //Конструктор копирования
     AboutBook(const char *name_book, int num_page_book, int amount_book, const char mydescription[]);//конструктор с параметрами
     void print();
+    char *getdefinition() const;
     ~AboutBook();
 };
 
@@ -67,5 +71,6 @@ public:
     NumBook(const NumBook &myNumBook); //Конструктор копирования
     NumBook(const char name_book[], int num_page_book, int amount_book, int myNumber); // Конструктор с параметрами
     void print();
+    char *getdefinition() const;
 };
 #endif //CLIONPROGET_HEDERS_H

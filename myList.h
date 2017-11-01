@@ -16,7 +16,6 @@ class myList {
         elem *next; // указатель на следующий элемент
         elem *prev; // указатель на предыдущий элемент
         elem(Books *d);
-
         virtual ~elem();
     };
     elem *lstart, *lend;
@@ -26,6 +25,9 @@ class myList {
         void del();
         void print();
         void delbynumber(int number = 0);
+        void addbynumber(int number, Books *d);
+        void findbyname(const char name[]);
+        void findbydescription(const char name[]);
 };
 
 

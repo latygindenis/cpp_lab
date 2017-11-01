@@ -72,21 +72,19 @@ int main() {
 /*-----------Демонстрация наследования--------------------------------*/
 
 
-    NumBook myNumBook("Dost", 975, 784, 71);
+    NumBook myNumBook("Dostevsky", 975, 784, 71);
     AboutBook myAboutBook("Joo", 145, 325, "Kolly");
-    Books myMainBook("Dost", 975, 784);
+    Books myMainBook("Dostevsky", 975, 784);
 
-    myList Hyu;
-    Hyu.add(&myMainBook);
-    Hyu.add(&myAboutBook);
-    Hyu.add(&myNumBook);
-    Hyu.add(&myNumBook);
-
-
-    Hyu.print();
+    myList testlist;
+    testlist.add(&myMainBook);
+    testlist.add(&myAboutBook);
+    testlist.add(&myNumBook);
+    testlist.add(&myAboutBook);
+    testlist.print();
     cout<<endl;
-    Hyu.delbynumber(9);
-    Hyu.print();
-
+    testlist.findbyname("Joo");
+    cout<<endl;
+    testlist.findbydescription("Kolly");
     return 0;
 }
