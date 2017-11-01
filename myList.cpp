@@ -9,12 +9,6 @@ myList::elem::elem(Books *d)  {
     field = d;
 }
 
-myList::elem::~elem() {
-    field = NULL;
-    next = NULL;
-    prev = NULL;
-}
-
 
 myList::myList() {
     lstart=lend=NULL;
@@ -178,3 +172,13 @@ if (pv->field->getdefinition() && !strcmp(pv->field->getdefinition(), name))
     }
 }
 
+myList::~myList() {
+    elem *pv;
+    while (lstart != lend)
+    {
+        pv = lstart;
+        lstart = pv->next;
+        delete pv;
+    }
+    delete lstart;
+}
