@@ -9,11 +9,9 @@ myList::elem::elem(Books *d)  {
     field = d;
 }
 
-
 myList::myList() {
     lstart=lend=NULL;
 }
-
 
 void myList::add(Books *d) {
     elem *pv = new elem(d);
@@ -100,25 +98,40 @@ void myList::addbynumber(int number, Books *d) {
     elem *pv = new elem(d);
     elem *old = lstart;
 
-    for (int i = 0; i!=number; i++)
-    {
-        old = old->next;
+    try{
+        if (number < 0)
+        {
+            throw 0;
+        }
+        else {
+            for (int i = 0; i!=number; i++)
+            {
+                old = old->next;
+            }
+            if (old == lstart)
+            {
+                lstart = pv;
+                pv->next = old;
+                pv->prev = lend;
+                old->prev = pv;
+                lend->next = pv;
+            }
+            else
+            {
+                pv->prev = old->prev;
+                pv->next = old;
+                old->prev->next = pv;
+                old->prev = pv;
+            }
+        }
     }
-    if (old == lstart)
+    catch (int i)
     {
-        lstart = pv;
-        pv->next = old;
-        pv->prev = lend;
-        old->prev = pv;
-        lend->next = pv;
+        cout<<"Invalid value of number"<<endl;
+
     }
-    else
-    {
-        pv->prev = old->prev;
-        pv->next = old;
-        old->prev->next = pv;
-        old->prev = pv;
-    }
+
+
 }
 
 void myList::findbyname(const char name[]) {
@@ -142,7 +155,6 @@ void myList::findbyname(const char name[]) {
     }
     if (!check)
     {
-
         cout<<"Nothing found"<<endl;
     }
 }

@@ -1,8 +1,12 @@
 #include "heders.h"
 #include "myList.h"
+#include <exception>
 using namespace std;
 
 int main() {
+
+
+
 ///*-------Запись и чтение из текстового------------*/
 //    Books myBin("Help", 111789, 50), myBintest;
 //    ofstream f("out.txt"); //Открытие файла для записи
@@ -72,20 +76,38 @@ int main() {
 /*-----------Демонстрация наследования--------------------------------*/
 
 
-    NumBook myNumBook("Dostevsky", 975, 784, 71);
+    Books myOutputBook("Dostevsky", 9757788, 784);
+    ofstream input_bin("input2.bin", std::ios_base::binary);  //Запись в бинарный
+    myOutputBook.write(input_bin);
+    input_bin.close();
+
+    Books myOutputBook1;
+    ifstream output_bin("input2.bin", std::ios_base::binary); //Проверка на пустой файл
+    myOutputBook1.read(output_bin);  //Чтение из бинарный
+    output_bin.close();
+    cout<<myOutputBook1<<endl;
+
+
+    NumBook *ps;
+    NumBook myNumBook("Tolstoy", -100, -784, 71);//исключение создания объекта с неправильными данными
     AboutBook myAboutBook("Joo", 145, 325, "Kolly");
     Books myMainBook("Dostevsky", 975, 784);
-
+    ps = new NumBook("Dosteddddvsky", 975, 784, 71);
     myList testlist;
-    testlist.add(&myMainBook);
-    testlist.add(&myAboutBook);
     testlist.add(&myNumBook);
     testlist.add(&myAboutBook);
+    testlist.add(&myMainBook);
+    testlist.addbynumber(-5, ps);//исключение добавления по неверному номеру
     testlist.print();
+
+
     cout<<endl;
-    testlist.findbyname("Joo");
+    testlist.findbyname("Gxkxk");
     cout<<endl;
     testlist.findbydescription("Kolly");
+
+    testlist.print();
+
 
     return 0;
 }

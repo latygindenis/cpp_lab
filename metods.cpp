@@ -18,13 +18,26 @@ Books::Books() //конструктор по умолчанию
     num_page = 0;
     amount = 0;
 }
+
 Books::Books(const char name_book[], int num_page_book, int amount_book) //Конструктор с константной строкой
 {
-    name = new char[sizeof(name_book)+1];
-    name = strcpy(name, reinterpret_cast<const char *>(name_book));
-    num_page = num_page_book;
-    amount = amount_book;
+    try {
+        name = new char[sizeof(name_book)+1];
+        name = strcpy(name, reinterpret_cast<const char *>(name_book));
+        if (num_page_book<0) throw 0;
+        else { num_page = num_page_book;}
+        if (amount_book<0) throw 1;
+        else {   amount = amount_book;}
+    }catch (int i)
+    {
+        if (i == 0) cout<<"Error value of num_page"<<endl;
+        if (i == 1) cout<<"Error value of amount_book"<<endl;
+    }
+
+
 }
+
+
 Books::Books(const Books &book) //Конструктор копирования
 {
     name = new char[strlen(book.name)+1];
@@ -133,8 +146,19 @@ ostream & operator << (ostream &os, Books &book) {
 }
 istream& operator >> (istream& is, Books &book)
 {
-    is >>book.name>>book.num_page>>book.amount;
-    return is;
+    try
+    {
+        if (!is) throw 0;
+        else
+        {
+            is >>book.name>>book.num_page>>book.amount;
+            return is;
+        }
+    }catch (int i) {
+        if (i == 0) {
+            cout << "Empty .txt file" << endl;
+        }
+    }
 }
 
 char *Books::getName() const {
@@ -152,22 +176,32 @@ void Books::write(ofstream &os) {
 }
 
 void Books::read(ifstream &is){
-    char ch;
-    int i=0;
-    streampos s = is.tellg();
-    while ((ch = is.get()) !='\0')
+    try
     {
-        i++;
-    }
-    is.seekg(s);
-    if (name != nullptr)
+        if (!is) throw 0;
+        else{
+        char ch;
+        int i=0;
+        streampos s = is.tellg();
+        while ((ch = is.get()) !='\0')
+        {
+            i++;
+        }
+        is.seekg(s);
+        if (name != nullptr)
+        {
+            delete[] name;
+        }
+        name = new char[i + 1];
+        is.read(name, i + 1);
+        is.read(reinterpret_cast<char *>(&num_page), sizeof(num_page));
+        is.read(reinterpret_cast<char *>(&amount), sizeof(amount));
+        }
+    }catch (int i)
     {
-        delete[] name;
+        cout<<"Empty .bin file"<<endl;
     }
-    name = new char[i + 1];
-    is.read(name, i + 1);
-    is.read(reinterpret_cast<char *>(&num_page), sizeof(num_page));
-    is.read(reinterpret_cast<char *>(&amount), sizeof(amount));
+
 }
 
 char *Books::getdefinition() const {
